@@ -1,11 +1,851 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 2 Guide</title>
+    <title>KKU Campus Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff8a9a;
+            /* ชมพูส้มพาสเทล */
+            --secondary: #4db6ac;
+            /* เขียวมิ้นท์ */
+            --bg1: #ffe8f0;
+            --bg2: #fff9e5;
+            --bg3: #e3f6ff;
+            --text-main: #37474f;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Kanit', system-ui, sans-serif;
+            background: radial-gradient(circle at 0 0, #ffe3f0 0, transparent 55%),
+                radial-gradient(circle at 100% 0, #e3f4ff 0, transparent 55%),
+                linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+            color: var(--text-main);
+            line-height: 1.65;
+        }
+
+        /* ---------- Layout หลัก ---------- */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 6vw;
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        #logoCanvas {
+            border-radius: 16px;
+            background: linear-gradient(135deg, #ffe0b2, #ffccbc);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .site-title {
+            margin-left: 1.5rem;
+            flex: 1;
+        }
+
+        .site-title h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: #37474f;
+        }
+
+        .site-title p {
+            font-size: 0.95rem;
+        }
+
+        .student-info {
+            margin-top: 0.3rem;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            margin-left: 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
+
+        nav a:hover {
+            background: #ffffff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+            transform: translateY(-2px);
+        }
+
+        main {
+            padding: 1.8rem 6vw 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin-bottom: 2.8rem;
+        }
+
+        section>h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.2rem 0.9rem 0.25rem 0.6rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        section>h2::before {
+            content: "";
+            width: 6px;
+            height: 70%;
+            border-radius: 999px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+
+        /* ---------- Intro ---------- */
+        #intro {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 22px;
+            padding: 1.5rem 1.6rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.10);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        #intro p {
+            flex: 2;
+            min-width: 240px;
+            font-size: 0.98rem;
+        }
+
+        #intro .highlight-box {
+            flex: 1;
+            min-width: 220px;
+            background: linear-gradient(135deg, #fff3e0, #fce4ec);
+            border-radius: 18px;
+            padding: 0.85rem 1rem;
+            border: 1px dashed rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+        }
+
+        /* ---------- สถานที่แนะนำ ---------- */
+        .place-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .place-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 1.1rem 1.1rem 1.4rem;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.09);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .place-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                    rgba(255, 138, 154, 0.14),
+                    rgba(77, 182, 172, 0.10));
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+
+        .place-card:hover::before {
+            opacity: 1;
+        }
+
+        .place-card:hover {
+            transform: translateY(-4px);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            box-shadow: 0 22px 50px rgba(0, 0, 0, 0.18);
+        }
+
+        .place-card h3 {
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .place-card p.desc {
+            font-size: 0.95rem;
+        }
+
+        .place-info {
+            font-size: 0.85rem;
+            list-style: none;
+            background: #fff7f2;
+            border-radius: 14px;
+            padding: 0.6rem 0.9rem;
+            border: 1px dashed rgba(0, 0, 0, 0.08);
+        }
+
+        .place-info li+li {
+            margin-top: 0.18rem;
+        }
+
+        .place-images {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 0.25rem;
+        }
+
+        .place-images figure {
+            flex: 1;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            background: #fafafa;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .place-images img {
+            display: block;
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.25s ease;
+        }
+
+        .place-card:hover .place-images img {
+            transform: scale(1.04);
+        }
+
+        .place-images figcaption {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.45rem 0.45rem;
+            background: #ffffff;
+        }
+
+        /* ---------- ฟอร์มแนะนำสถานที่ ---------- */
+        #recommend {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 22px;
+            padding: 1.4rem 1.6rem 1.7rem;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        #recommend p.note {
+            font-size: 0.9rem;
+            margin-bottom: 0.9rem;
+            color: #607d8b;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.95rem 1.3rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.28rem;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="file"],
+        select,
+        textarea {
+            padding: 0.55rem 0.7rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: #fffdfb;
+            outline: none;
+            transition: border 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(77, 182, 172, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .btn-row {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 0.7rem;
+            justify-content: flex-end;
+            margin-top: 0.4rem;
+        }
+
+        button {
+            border: none;
+            border-radius: 999px;
+            padding: 0.5rem 1.4rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff9a9e, #ff8a65);
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(255, 138, 101, 0.45);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(255, 138, 101, 0.65);
+        }
+
+        .btn-secondary {
+            background: #eceff1;
+            color: #455a64;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 6vw 1.6rem;
+            font-size: 0.8rem;
+            color: #607d8b;
+        }
+
+        /* ---------- Media Query (Responsive) ---------- */
+        @media (max-width: 900px) {
+            header {
+                flex-wrap: wrap;
+                gap: 0.8rem;
+            }
+
+            .site-title {
+                margin-left: 0.9rem;
+            }
+
+            nav {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 0.4rem;
+            }
+
+            nav ul {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1.4rem 5vw 2.6rem;
+            }
+
+            header {
+                flex-direction: row;
+            }
+
+            #intro {
+                flex-direction: column;
+            }
+
+            .place-images {
+                flex-direction: column;
+            }
+
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-row {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            #logoCanvas {
+                margin-bottom: 0.6rem;
+            }
+
+            .site-title h1 {
+                font-size: 1.6rem;
+            }
+
+            nav ul {
+                gap: 0.4rem;
+            }
+
+            nav a {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.7rem;
+            }
+
+            section>h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    
+    <header>
+        <!-- โลโก้ Canvas + Animation -->
+        <canvas id="logoCanvas" width="220" height="80" aria-label="KKU Campus Guide Logo"></canvas>
+
+        <div class="site-title">
+            <h1>KKU Campus Guide</h1>
+            <p>แนะนำสถานที่น่าไปภายในมหาวิทยาลัยขอนแก่น</p>
+            <p class="student-info">
+                รหัสนักศึกษา: <strong>673380204-8</strong> |
+                ชื่อ-สกุล: <strong>นางสาวกานติมา สุคำภา</strong>
+            </p>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="#intro">รู้จักมข.</a></li>
+                <li><a href="#places">สถานที่แนะนำ</a></li>
+                <li><a href="#recommend">แบบฟอร์มแนะนำสถานที่</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- SECTION: แนะนำภาพรวม -->
+        <section id="intro">
+            <h2>รู้จักมหาวิทยาลัยขอนแก่น (KKU)</h2>
+            <p>
+                มหาวิทยาลัยขอนแก่นเป็นมหาวิทยาลัยหลักของภาคตะวันออกเฉียงเหนือ
+                มีพื้นที่ขนาดใหญ่ เต็มไปด้วยตึกเรียน หอสมุด พื้นที่สีเขียว บึงน้ำ
+                และแหล่งพักผ่อนสำหรับนักศึกษาและบุคลากร ภายในเว็บหน้านี้จะพาไปทำความรู้จัก
+                สถานที่ต่าง ๆ ที่น่าไปภายใน KKU ทั้งสำหรับการเรียน การอ่านหนังสือ
+                และการพักผ่อนหย่อนใจค่ะ
+            </p>
+            <div class="highlight-box">
+                🌟 <strong>Tips สำหรับนักศึกษาใหม่</strong><br>
+                • ดาวน์โหลดแผนที่มข. หรือใช้ Google Maps ช่วยนำทาง<br>
+                • ควรเผื่อเวลาเดินทางระหว่างตึกอย่างน้อย 10–15 นาที<br>
+                • อย่าลืมพกบัตรนักศึกษา และร่มติดตัวไว้เสมอ!
+            </div>
+        </section>
+
+        <!-- SECTION: สถานที่แนะนำ -->
+        <section id="places">
+            <h2>สถานที่น่าไปภายใน KKU</h2>
+
+            <div class="place-grid">
+                <!-- 1. หอสมุดกลาง -->
+                <article class="place-card" id="central-library">
+                    <h3>หอสมุดกลาง มข.</h3>
+                    <p class="desc">
+                        หอสมุดกลางเป็นศูนย์รวมหนังสือ เอกสารวิชาการ และพื้นที่อ่านหนังสือที่เงียบสงบ
+                        มีทั้งมุมเดี่ยว มุมกลุ่ม ห้องประชุม และมีปลั๊กไฟพร้อมสำหรับนั่งทำรายงานยาว ๆ
+                    </p>
+                    <ul class="place-info">
+                        <li>📍 ตำแหน่ง: ใจกลางมหาวิทยาลัย ใกล้คณะวิทยาศาสตร์</li>
+                        <li>⏰ เวลาเปิด-ปิด: ประมาณ 08.30–20.00 น. (ขึ้นกับวันเปิดทำการ)</li>
+                        <li>💡 เหมาะสำหรับ: อ่านหนังสือเตรียมสอบ ทำรายงาน ประชุมกลุ่ม</li>
+                    </ul>
+                    <div class="place-images">
+                        <figure>
+                            <img src="../img/kku1.jpeg" alt="บรรยากาศด้านหน้าหอสมุดกลาง มข.">
+                            <figcaption>ด้านหน้าหอสมุดกลาง</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="../img/kku2.jpg" alt="พื้นที่อ่านหนังสือภายในหอสมุดกลาง มข.">
+                            <figcaption>มุมอ่านหนังสือภายในหอสมุด</figcaption>
+                        </figure>
+                    </div>
+                </article>
+
+                <!-- 2. บึงสีฐาน -->
+                <article class="place-card" id="bueng-si-than">
+                    <h3>บึงสีฐาน</h3>
+                    <p class="desc">
+                        บึงสีฐานเป็นบึงน้ำขนาดใหญ่ อยู่ไม่ไกลจากคณะสาธารณสุขศาสตร์
+                        เป็นจุดชมวิวพระอาทิตย์ตกและลมเย็น ๆ ในตอนเย็น
+                        เหมาะกับการนั่งเล่น พักผ่อน หรือออกกำลังกายรอบบึง
+                    </p>
+                    <ul class="place-info">
+                        <li>📍 ตำแหน่ง: โซนด้านหลังมหาวิทยาลัย ใกล้คณะสาธารณสุขฯ</li>
+                        <li>⏰ เวลา: เปิดตลอดวัน แต่ช่วงเย็นบรรยากาศดีที่สุด</li>
+                        <li>💡 เหมาะสำหรับ: เดินเล่น ออกกำลังกาย ถ่ายรูปกับเพื่อน</li>
+                    </ul>
+                    <div class="place-images">
+                        <figure>
+                            <img src="../img/kku3.jpg" alt="วิวบึงสีฐานตอนเย็นในมหาวิทยาลัยขอนแก่น">
+                            <figcaption>วิวบึงสีฐานตอนเย็น</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="../img/kku4.jpg" alt="ทางเดินออกกำลังกายรอบบึงสีฐาน">
+                            <figcaption>ทางเดินรอบบึงสำหรับวิ่งและปั่นจักรยาน</figcaption>
+                        </figure>
+                    </div>
+                </article>
+
+                <!-- 3. คอมเพล็กซ์ (ศูนย์อาหาร/ร้านค้า) -->
+                <article class="place-card" id="complex">
+                    <h3>คอมเพล็กซ์ (Complex)</h3>
+                    <p class="desc">
+                        คอมเพล็กซ์เป็นศูนย์รวมร้านอาหาร ร้านเครื่องดื่ม และร้านสะดวกซื้อ
+                        เหมาะสำหรับมาหาข้าวกินช่วงพักเที่ยง หรือมานั่งคุยกับเพื่อนหลังเลิกเรียน
+                    </p>
+                    <ul class="place-info">
+                        <li>📍 ตำแหน่ง: ใกล้คณะวิศวกรรมศาสตร์และคณะวิทยาศาสตร์</li>
+                        <li>⏰ เวลาเปิด-ปิด: ร้านอาหารส่วนใหญ่เปิดประมาณ 08.00–19.00 น.</li>
+                        <li>💡 เหมาะสำหรับ: หาอาหารราคานักศึกษา นั่งเล่น พูดคุยกับเพื่อน</li>
+                    </ul>
+                    <div class="place-images">
+                        <figure>
+                            <img src="../img/kku5.jpg" alt="บรรยากาศคอมเพล็กซ์ในมหาวิทยาลัยขอนแก่น">
+                            <figcaption>บรรยากาศด้านหน้าคอมเพล็กซ์</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="../img/kku6.jpg" alt="ศูนย์อาหารภายในคอมเพล็กซ์">
+                            <figcaption>มุมศูนย์อาหารและที่นั่งรับประทานอาหาร</figcaption>
+                        </figure>
+                    </div>
+                </article>
+
+                <!-- 4. ศาลเจ้าพ่อมอดินแดง -->
+                <article class="place-card" id="mo-din-daeng">
+                    <h3>ศาลเจ้าพ่อมอดินแดง</h3>
+                    <p class="desc">
+                        ศาลเจ้าพ่อมอดินแดงเป็นสถานที่ศักดิ์สิทธิ์คู่กับมหาวิทยาลัยขอนแก่น
+                        นักศึกษาหลายคนมักมาขอพรเรื่องการเรียน สุขภาพ และความสำเร็จ
+                    </p>
+                    <ul class="place-info">
+                        <li>📍 ตำแหน่ง: ด้านหน้ามหาวิทยาลัย ใกล้ถนนมิตรภาพ</li>
+                        <li>⏰ เวลา: สามารถเข้าไปสักการะได้ตลอดทั้งวัน</li>
+                        <li>💡 เหมาะสำหรับ: ขอพร ทำบุญ และถ่ายรูปเชิงวัฒนธรรม</li>
+                    </ul>
+                    <div class="place-images">
+                        <figure>
+                            <img src="../img/kku7.jpg" alt="ศาลเจ้าพ่อมอดินแดงด้านหน้า">
+                            <figcaption>ด้านหน้าศาลเจ้าพ่อมอดินแดง</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="../img/kku8.jpg" alt="บรรยากาศการสักการะเจ้าพ่อมอดินแดง">
+                            <figcaption>บรรยากาศการสักการะและไหว้ขอพร</figcaption>
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- SECTION: แบบฟอร์มแนะนำสถานที่ -->
+        <section id="recommend">
+            <h2>แบบฟอร์มแนะนำสถานที่ใน KKU</h2>
+            <p class="note">
+                หากมีสถานที่น่าสนใจภายในมหาวิทยาลัยขอนแก่นที่ยังไม่ได้อยู่ในเว็บนี้
+                สามารถกรอกแบบฟอร์มด้านล่างเพื่อแนะนำสถานที่เพิ่มเติมได้ค่ะ
+            </p>
+
+            <!-- ฟอร์มส่งด้วย Web3Forms -->
+            <form action="https://api.web3forms.com/submit" method="POST">
+                <!-- TODO: เปลี่ยนเป็น access_key ของตัวเองจาก Web3Forms -->
+                <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY_HERE">
+                <!-- ชื่อหัวข้ออีเมลที่จะได้รับ -->
+                <input type="hidden" name="subject" value="KKU Campus Guide - Recommend Place">
+                <!-- Redirect หลังส่งสำเร็จ (ถ้าอยากให้เด้งไปหน้าอื่นให้แก้ URL) -->
+                <input type="hidden" name="redirect" value="https://example.com/thankyou.html">
+
+                <div class="form-group">
+                    <label for="std-id">รหัสนักศึกษา <span style="color:#e64a19">*</span></label>
+                    <input type="text" id="std-id" name="student_id" placeholder="เช่น 673380204-8" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="std-name">ชื่อ-สกุล <span style="color:#e64a19">*</span></label>
+                    <input type="text" id="std-name" name="student_name" placeholder="ชื่อ-นามสกุล ผู้แนะนำสถานที่"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="place-name">ชื่อสถานที่ <span style="color:#e64a19">*</span></label>
+                    <input type="text" id="place-name" name="place_name" placeholder="เช่น สวนหย่อมหน้าคณะ ..."
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="place-zone">โซน/บริเวณของสถานที่</label>
+                    <select id="place-zone" name="place_zone">
+                        <option value="">-- เลือกโซน --</option>
+                        <option value="learning">โซนตึกเรียน/หอสมุด</option>
+                        <option value="food">โซนอาหาร/คอมเพล็กซ์</option>
+                        <option value="green">โซนสวน/บึง/ธรรมชาติ</option>
+                        <option value="culture">โซนวัฒนธรรม/ศาสนา</option>
+                        <option value="other">อื่น ๆ</option>
+                    </select>
+                </div>
+
+                <div class="form-group full">
+                    <label for="place-detail">รายละเอียดสถานที่ (บรรยากาศ จุดเด่น กิจกรรมที่ทำได้ ฯลฯ)</label>
+                    <textarea id="place-detail" name="place_detail"
+                        placeholder="ช่วยเล่าความน่าสนใจของสถานที่นี้ให้เพื่อน ๆ ฟังหน่อยค่ะ"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="place-image">ลิงก์รูปภาพสถานที่ (เช่น URL จาก Google Drive / Facebook)</label>
+                    <input type="text" id="place-image" name="place_image_url" placeholder="วางลิงก์รูปภาพ (ไม่บังคับ)">
+                </div>
+
+                <div class="form-group">
+                    <label for="visit-time">ช่วงเวลาที่เหมาะสมในการไป</label>
+                    <input type="text" id="visit-time" name="visit_time"
+                        placeholder="เช่น ช่วงเย็น, ตอนเช้า, วันธรรมดา ฯลฯ">
+                </div>
+
+                <div class="form-group full">
+                    <label for="contact">ช่องทางติดต่อ (ถ้าต้องการให้ติดต่อกลับ)</label>
+                    <input type="email" id="contact" name="contact" placeholder="อีเมล KKU หรือช่องทางอื่น (ไม่บังคับ)">
+                </div>
+
+                <div class="btn-row">
+                    <button type="reset" class="btn-secondary">ล้างข้อมูล</button>
+                    <button type="submit" class="btn-primary">ส่งแบบฟอร์ม</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        KKU Campus Guide | จัดทำเพื่อการเรียนวิชาเว็บดีไซน์เท่านั้น
+    </footer>
+
+    <!-- SCRIPT: Canvas Logo Animation -->
+    <script>
+        const canvas = document.getElementById('logoCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // ขนาด “ตรรกะ” ตามที่ตั้งใน HTML
+        const LOGICAL_WIDTH = 220;
+        const LOGICAL_HEIGHT = 80;
+
+        // รองรับหน้าจอคม ๆ (Retina)
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = LOGICAL_WIDTH * dpr;
+        canvas.height = LOGICAL_HEIGHT * dpr;
+        canvas.style.width = LOGICAL_WIDTH + 'px';
+        canvas.style.height = LOGICAL_HEIGHT + 'px';
+        ctx.scale(dpr, dpr);
+
+        // ให้ browser เรนเดอร์ภาพแบบคม ๆ
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
+        const logoImg = new Image();
+        // path รูปโลโก้มข. (ต้องมีไฟล์จริง)
+        logoImg.src = '../img/kku9.png';
+
+        let angle = 0;
+        let pulse = 0;
+        let pulseDir = 1;
+        const particles = [];
+
+        function initParticles() {
+            const colors = ['#ffccbc', '#ffe082', '#b2dfdb', '#ffe8f0'];
+            for (let i = 0; i < 18; i++) {
+                particles.push({
+                    x: Math.random() * LOGICAL_WIDTH,
+                    y: Math.random() * LOGICAL_HEIGHT,
+                    r: 2 + Math.random() * 2,
+                    speed: 0.3 + Math.random() * 0.4,
+                    color: colors[Math.floor(Math.random() * colors.length)]
+                });
+            }
+        }
+
+        function drawBackground() {
+            const w = LOGICAL_WIDTH;
+            const h = LOGICAL_HEIGHT;
+
+            const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+            bgGrad.addColorStop(0, '#ffe0b2');
+            bgGrad.addColorStop(1, '#ffccbc');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = 0.7;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+
+                p.x += p.speed;
+                if (p.x - p.r > w) {
+                    p.x = -p.r;
+                    p.y = Math.random() * h;
+                }
+            });
+        }
+
+        function drawLogo() {
+            const w = LOGICAL_WIDTH;
+            const h = LOGICAL_HEIGHT;
+            const cx = 70;
+            const cy = h / 2;
+            const baseR = 28;
+
+            ctx.clearRect(0, 0, w, h);
+
+            drawBackground();
+
+            const pulseR = baseR + 10 + pulse;
+            const glowGrad = ctx.createRadialGradient(cx, cy, baseR, cx, cy, pulseR);
+            glowGrad.addColorStop(0, 'rgba(255,255,255,0.0)');
+            glowGrad.addColorStop(1, 'rgba(255,255,255,0.9)');
+            ctx.beginPath();
+            ctx.arc(cx, cy, pulseR, 0, Math.PI * 2);
+            ctx.fillStyle = glowGrad;
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(cx, cy, baseR + 6, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,255,255,0.96)';
+            ctx.fill();
+
+            const circleGrad = ctx.createLinearGradient(cx - baseR, cy - baseR, cx + baseR, cy + baseR);
+            circleGrad.addColorStop(0, '#ffb74d');
+            circleGrad.addColorStop(1, '#ff8a65');
+            ctx.beginPath();
+            ctx.arc(cx, cy, baseR, 0, Math.PI * 2);
+            ctx.fillStyle = circleGrad;
+            ctx.fill();
+
+            // วาดโลโก้มข. ด้านใน
+            if (logoImg.complete && logoImg.naturalWidth > 0) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(cx, cy, baseR - 4, 0, Math.PI * 2);
+                ctx.clip();
+
+                const imgSize = (baseR - 4) * 2;
+
+                // คราวนี้ crop จากรูปใหญ่ให้ตรงกลาง → ชัดกว่า
+                const srcSize = Math.min(logoImg.width, logoImg.height);
+                const sx = (logoImg.width - srcSize) / 2;
+                const sy = (logoImg.height - srcSize) / 2;
+
+                ctx.drawImage(
+                    logoImg,
+                    sx, sy, srcSize, srcSize,        // ต้นทาง (crop กลางภาพ)
+                    cx - imgSize / 2, cy - imgSize / 2, imgSize, imgSize // ปลายทาง
+                );
+                ctx.restore();
+            }
+
+            const orbitR = baseR + 14;
+            ctx.beginPath();
+            ctx.arc(cx, cy, orbitR, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(255,255,255,0.75)';
+            ctx.lineWidth = 1.8;
+            ctx.setLineDash([6, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            const dotX = cx + orbitR * Math.cos(angle);
+            const dotY = cy + orbitR * Math.sin(angle);
+            ctx.beginPath();
+            ctx.arc(dotX, dotY, 4, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.ellipse(cx, cy + baseR + 10, baseR + 8, 6, 0, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0,0,0,0.15)';
+            ctx.fill();
+
+            ctx.fillStyle = '#37474f';
+            ctx.textBaseline = 'middle';
+
+            ctx.font = 'bold 20px Kanit';
+            ctx.fillText('KKU', 120, cy - 8);
+
+            ctx.font = '13px Kanit';
+            ctx.fillText('Campus Guide', 120, cy + 12);
+
+            angle += 0.035;
+
+            pulse += 0.25 * pulseDir;
+            if (pulse > 4 || pulse < -2) {
+                pulseDir *= -1;
+            }
+
+            requestAnimationFrame(drawLogo);
+        }
+
+        logoImg.onload = () => {
+            initParticles();
+            drawLogo();
+        };
+    </script>
+
 </body>
+
 </html>
