@@ -7,6 +7,7 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/mobileweb/lab04_ionic/dist/',   // 👈 เพิ่มแค่นี้
   plugins: [
     vue(),
     legacy()
