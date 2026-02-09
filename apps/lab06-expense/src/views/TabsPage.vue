@@ -1,0 +1,33 @@
+<template>
+  <ion-page>
+    <ion-tabs>
+
+      <ion-router-outlet :key="$route.fullPath"></ion-router-outlet>
+
+      <ion-tab-bar slot="bottom">
+
+        <ion-tab-button tab="tab1" href="/tabs/tab1">
+          <ion-icon :icon="list"></ion-icon>
+          <ion-label>รายการ</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab2" href="/tabs/tab2">
+          <ion-icon :icon="addCircle"></ion-icon>
+          <ion-label>เพิ่ม</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab3" href="/tabs/tab3">
+          <ion-icon :icon="create"></ion-icon>
+          <ion-label>แก้ไข</ion-label>
+        </ion-tab-button>
+
+      </ion-tab-bar>
+
+    </ion-tabs>
+  </ion-page>
+</template>
+
+<script setup lang="ts">
+import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue'
+import { list, addCircle, create } from 'ionicons/icons'
+</script>
