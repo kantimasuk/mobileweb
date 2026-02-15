@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "548071625345",
+    "project_id": "lab06-expense-5e3c8",
+    "storage_bucket": "lab06-expense-5e3c8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548071625345:android:16b4efd69e07b0f6e93380",
+        "android_client_info": {
+          "package_name": "cpkku.kantima.lab07"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "548071625345-asdtc4m1rur62ilhlfeuagge8j252udp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASw1NhveMJGXlCgq0h8jSSuSE6eyi-dds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "548071625345-asdtc4m1rur62ilhlfeuagge8j252udp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
