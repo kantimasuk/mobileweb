@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lab09 - Arm Workout App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Kanit Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #4f8cff, #6c63ff);
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: white;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 5px 0;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-weight: 600;
+            border-bottom: 3px solid #4f8cff;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .image-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .phone-frame {
+            background: #000;
+            padding: 15px;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .phone-frame img {
+            width: 260px;
+            border-radius: 25px;
+            display: block;
+        }
+
+        .video-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        video {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #4f8cff;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            margin-top: 10px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #3c6fd9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+        }
+
+        .center-text {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Lab 9: Ionic + Mobile Phone Sensors</h1>
+        <p>รหัสนักศึกษา 673380204-8</p>
+        <p>นางสาวกานติมา สุคำภา</p>
+    </header>
+
+    <div class="container">
+
+        <section>
+            <h2>รายละเอียดโครงการ</h2>
+            <p>
+                แอปพลิเคชัน Arm Workout App พัฒนาด้วย Ionic + Vue และ Capacitor
+                ใช้ Accelerometer ตรวจจับการยกแขนขึ้น-ลง
+                มีระบบตรวจสอบ Range of Motion, Tempo และแนวตั้ง
+                พร้อมแจ้งเตือนด้วยเสียง (Text-to-Speech) และการสั่น (Haptics)
+            </p>
+        </section>
+
+        <section>
+            <h2>ภาพตัวอย่างหน้าจอ App</h2>
+
+            <h3>หน้าเริ่มต้น</h3>
+            <div class="image-wrapper">
+                <div class="phone-frame">
+                    <img src="../img/start.jpg" alt="หน้าเริ่ม">
+                </div>
+            </div>
+
+            <h3>ขณะกำลังนับ</h3>
+            <div class="image-wrapper">
+                <div class="phone-frame">
+                    <img src="../img/counting.jpg" alt="กำลังนับ">
+                </div>
+            </div>
+
+            <h3>หน้าแสดงสถิติเมื่อจบการทำกายบริหาร</h3>
+            <div class="image-wrapper">
+                <div class="phone-frame">
+                    <img src="../img/result.jpg" alt="หน้าสถิติ">
+                </div>
+            </div>
+
+        </section>
+
+        <section>
+            <h2>วิดีโอสาธิตการใช้งาน</h2>
+            <p>
+                นักศึกษาสาธิตการใช้งานแอปด้วยตนเอง แสดงการกด Start
+                มีเสียงแนะนำ และสามารถนับรอบเมื่อยกแขนขึ้น-ลง
+            </p>
+
+            <div class="video-container">
+                <video controls>
+                    <source src="../videos/IMG_4216.mov" type="video/mp4" >
+                    เบราว์เซอร์ของคุณไม่รองรับวิดีโอ
+                </video>
+            </div>
+        </section>
+
+        <section>
+            <h2>การใช้ AI ในการพัฒนา</h2>
+
+            <h3>นักศึกษาใช้ AI ช่วยส่วนใดบ้าง</h3>
+            <p class="center-text">
+                ใช้ AI ช่วยจัด layout UI, อธิบาย logic ของ ArmWorkoutEngine,
+                refactor โค้ด และช่วยแก้ TypeScript error
+            </p>
+
+            <h3>ส่วนที่นักศึกษาปรับแก้ไขเอง</h3>
+            <p class="center-text">
+                ปรับค่า threshold ให้เหมาะกับอุปกรณ์จริง,
+                ทดสอบและแก้ไข algorithm,
+                ปรับ UI ให้เหมาะกับหน้าจอมือถือ,
+                และจัดทำวิดีโอสาธิตด้วยตนเอง
+            </p>
+        </section>
+
+        <section>
+            <h2>Source Code</h2>
+            <a class="btn" href="https://github.com/ใส่usernameของคุณ/lab09-sensors" target="_blank">
+                ดู Source Code บน GitHub
+            </a>
+        </section>
+
+    </div>
+
+    <footer>
+        © 2026 Mobile Web Application Development - Lab09
+    </footer>
+
+</body>
+
+</html>
